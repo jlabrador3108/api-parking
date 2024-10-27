@@ -264,4 +264,12 @@ export class UsersService {
       },
     });
   }
+
+  async getUserRoles(userId: number): Promise<string[]> {
+    const user = await this.usersRepository.findOne({
+      where: { id: userId },
+      select: ['roles'],
+    });
+    return user?.roles.map((role) => role.denomination) || [];
+  }
 }

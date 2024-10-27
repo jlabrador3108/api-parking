@@ -9,6 +9,7 @@ interface EnvVars {
   POSTGRES_PASS: string;
   POSTGRES_DB: string;
   SECRET_KEY: string;
+  MONGODB_URL_CONNECTION: string;
 }
 
 const envsSchema = joi
@@ -20,6 +21,7 @@ const envsSchema = joi
     POSTGRES_PASS: joi.string().required(),
     POSTGRES_DB: joi.string().required(),
     SECRET_KEY: joi.string().required(),
+    MONGODB_URL_CONNECTION: joi.string().required(),
   })
   .unknown(true);
 
@@ -39,4 +41,5 @@ export const envs = {
   postgres_pass: envVars.POSTGRES_PASS,
   postgres_db: envVars.POSTGRES_DB,
   secret_key: envVars.SECRET_KEY,
+  mongodb_connection: envVars.MONGODB_URL_CONNECTION,
 };

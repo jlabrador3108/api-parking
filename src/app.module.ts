@@ -7,26 +7,17 @@ import { ParkingModule } from './parking/parking.module';
 import { AppDataSource } from './database/config/data-source';
 import { AuthModule } from './auth/auth.module';
 import { ParkingLogsModule } from './parking-logs/parking-logs.module';
-import { ParkingLog } from './parking-logs/entities/mongodb/parking-log.entity';
+import { MongoDataSource } from './database/config/data-source-mongo';
+import { APP_GUARD } from '@nestjs/core';
+import { ParkingRolesGuard } from './@common/guards/parking-roles.guard';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       ...AppDataSource.options,
     }),
-    // TypeOrmModule.forRoot({
-    //   ...MongoDataSource.options,
-    // }),
     TypeOrmModule.forRoot({
-      name: 'mongoConnection',
-      type: 'mongodb',
-      url: 'mongodb://127.0.0.1:27017/parkings-logs',
-      // host: 'localhost',
-      // port: 27017,
-      // database: 'parking-logs',
-      entities: [ParkingLog],
-      // useUnifiedTopology: true,
-      synchronize: true,
+      ...MongoDataSource.options,
     }),
     AuthModule,
     UsersModule,
@@ -36,6 +27,11 @@ import { ParkingLog } from './parking-logs/entities/mongodb/parking-log.entity';
     ParkingLogsModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ParkingRolesGuard,
+    },
+  ],
 })
 export class AppModule {}

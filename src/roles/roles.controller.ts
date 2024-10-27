@@ -9,17 +9,23 @@ import {
   HttpStatus,
   ParseIntPipe,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateRoleDto } from './dto/create-role.dto';
+import { AuthGuard } from 'src/@common/guards/auth.guard';
+import { ParkingRoles } from 'src/@common/decorators/tecopay-roles.decorator';
+import { ParkingRole } from 'src/@common/enums/roles.enum';
 
 @Controller('role')
 @ApiTags('Role')
+@UseGuards(AuthGuard)
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
   @Post()
+  @ParkingRoles(ParkingRole.ADMIN)
   @ApiOperation({ summary: 'New role' })
   async create(@Body() createRoleDto: CreateRoleDto) {
     try {
@@ -40,6 +46,7 @@ export class RolesController {
   }
 
   @Get()
+  @ParkingRoles(ParkingRole.ADMIN)
   @ApiOperation({ summary: 'Get all roles' })
   async getAll() {
     try {
@@ -61,6 +68,7 @@ export class RolesController {
   }
 
   @Get(':id')
+  @ParkingRoles(ParkingRole.ADMIN)
   @ApiOperation({ summary: 'Get role by id' })
   async getRoleById(@Param('id', ParseIntPipe) id: number) {
     try {
@@ -82,6 +90,7 @@ export class RolesController {
   }
 
   @Put(':id')
+  @ParkingRoles(ParkingRole.ADMIN)
   @ApiOperation({ summary: 'Update role' })
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -105,6 +114,7 @@ export class RolesController {
   }
 
   @Delete(':id')
+  @ParkingRoles(ParkingRole.ADMIN)
   @ApiOperation({ summary: 'Delete role' })
   async remove(@Param('id', ParseIntPipe) id: number) {
     try {

@@ -7,11 +7,18 @@ import { Reservation } from './entities/reservation.entity';
 import { UsersModule } from 'src/users/users.module';
 import { Parking } from 'src/parking/entities/parking.entity';
 import { ParkingLogsModule } from 'src/parking-logs/parking-logs.module';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { envs } from 'src/@config/envs';
 
 @Module({
   controllers: [ReservationsController],
   providers: [ReservationsService],
   imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.register({
+      secret: envs.secret_key,
+    }),
     UsersModule,
     TypeOrmModule.forFeature([Reservation, Parking, User]),
     ParkingLogsModule,

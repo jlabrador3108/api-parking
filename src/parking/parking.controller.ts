@@ -9,17 +9,24 @@ import {
   HttpStatus,
   ParseIntPipe,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ParkingService } from './parking.service';
 import { CreateParkingDto } from './dto/create-parking.dto';
 import { UpdateParkingDto } from './dto/update-parking.dto';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/@common/guards/auth.guard';
+import { ParkingRole } from 'src/@common/enums/roles.enum';
+import { ParkingRoles } from 'src/@common/decorators/tecopay-roles.decorator';
 
 @Controller('parking')
+@ApiTags('Parking')
+@UseGuards(AuthGuard)
 export class ParkingController {
   constructor(private readonly parkingService: ParkingService) {}
 
   @Post()
+  @ParkingRoles(ParkingRole.ADMIN, ParkingRole.EMPLOYEE)
   @ApiOperation({ summary: 'New parking' })
   async create(@Body() createParkingDto: CreateParkingDto) {
     try {
@@ -40,6 +47,7 @@ export class ParkingController {
   }
 
   @Get()
+  @ParkingRoles(ParkingRole.ADMIN, ParkingRole.EMPLOYEE)
   @ApiOperation({ summary: 'Get all parking' })
   async getAll() {
     try {
@@ -61,6 +69,7 @@ export class ParkingController {
   }
 
   @Get(':id')
+  @ParkingRoles(ParkingRole.ADMIN, ParkingRole.EMPLOYEE)
   @ApiOperation({ summary: 'Get parking by id' })
   async getParkingById(@Param('id', ParseIntPipe) id: number) {
     try {
@@ -82,6 +91,7 @@ export class ParkingController {
   }
 
   @Put(':id')
+  @ParkingRoles(ParkingRole.ADMIN, ParkingRole.EMPLOYEE)
   @ApiOperation({ summary: 'Update parking' })
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -105,6 +115,7 @@ export class ParkingController {
   }
 
   @Delete(':id')
+  @ParkingRoles(ParkingRole.ADMIN, ParkingRole.EMPLOYEE)
   @ApiOperation({ summary: 'Delete parking' })
   async remove(@Param('id', ParseIntPipe) id: number) {
     try {

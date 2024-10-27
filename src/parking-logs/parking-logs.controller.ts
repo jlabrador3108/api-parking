@@ -1,12 +1,24 @@
-import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  UseGuards,
+} from '@nestjs/common';
 import { ParkingLogsService } from './parking-logs.service';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/@common/guards/auth.guard';
+import { ParkingRoles } from 'src/@common/decorators/tecopay-roles.decorator';
+import { ParkingRole } from 'src/@common/enums/roles.enum';
 
 @Controller('parking-logs')
+@ApiTags('Parking Logs')
+@UseGuards(AuthGuard)
 export class ParkingLogsController {
   constructor(private readonly parkingLogsService: ParkingLogsService) {}
 
   @Get()
+  @ParkingRoles(ParkingRole.ADMIN)
   @ApiOperation({ summary: 'Get all parking logs' })
   async getAll() {
     try {

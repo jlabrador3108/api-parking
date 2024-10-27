@@ -8,6 +8,7 @@ import {
   Param,
   ParseIntPipe,
   Get,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -15,6 +16,9 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateRolesDto } from './dto/update-roles.dto';
 import { CreateUserByAdminDto } from './dto/create-user-by-admin.dto';
+import { AuthGuard } from 'src/@common/guards/auth.guard';
+import { ParkingRoles } from 'src/@common/decorators/tecopay-roles.decorator';
+import { ParkingRole } from 'src/@common/enums/roles.enum';
 
 @Controller('user')
 @ApiTags('User')
@@ -42,7 +46,9 @@ export class UsersController {
   }
 
   @Post('admin')
-  @ApiOperation({ summary: 'New user' })
+  @UseGuards(AuthGuard)
+  @ParkingRoles(ParkingRole.ADMIN)
+  @ApiOperation({ summary: 'New user by admin' })
   async createUserByAdmin(@Body() createUserDto: CreateUserByAdminDto) {
     try {
       const response = await this.usersService.createByAdmin(createUserDto);
@@ -62,7 +68,9 @@ export class UsersController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get user by id' })
+  @UseGuards(AuthGuard)
+  @ParkingRoles(ParkingRole.ADMIN)
+  @ApiOperation({ summary: 'Get all users' })
   async getAllUsers() {
     try {
       const response = await this.usersService.findAllUsers();
@@ -83,7 +91,9 @@ export class UsersController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get all users' })
+  @UseGuards(AuthGuard)
+  @ParkingRoles(ParkingRole.ADMIN)
+  @ApiOperation({ summary: 'Get user by id' })
   async getUserById(@Param('id', ParseIntPipe) id: number) {
     try {
       const response = await this.usersService.findById(id);
@@ -104,6 +114,8 @@ export class UsersController {
   }
 
   @Put(':id')
+  @UseGuards(AuthGuard)
+  @ParkingRoles(ParkingRole.ADMIN)
   @ApiOperation({ summary: 'Update user' })
   async updateUser(
     @Param('id', ParseIntPipe) userId: number,
@@ -130,6 +142,8 @@ export class UsersController {
   }
 
   @Put(':id/roles')
+  @UseGuards(AuthGuard)
+  @ParkingRoles(ParkingRole.ADMIN)
   @ApiOperation({ summary: 'Update roles in user' })
   async updateRoles(
     @Param('id', ParseIntPipe) userId: number,

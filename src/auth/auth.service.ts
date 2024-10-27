@@ -17,6 +17,7 @@ export class AuthService {
     const existingUser = await this.usersService.findOne(user.email);
 
     if (existingUser.data && existingUser.data.password === user.password) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = existingUser.data;
       return result;
     }
