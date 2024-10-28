@@ -6,6 +6,8 @@
 #Migrations
 migrations
 
+yarn.lock
+
 # Logs
 logs
 *.log
