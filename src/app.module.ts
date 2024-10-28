@@ -8,8 +8,6 @@ import { AppDataSource } from './database/config/data-source';
 import { AuthModule } from './auth/auth.module';
 import { ParkingLogsModule } from './parking-logs/parking-logs.module';
 import { MongoDataSource } from './database/config/data-source-mongo';
-import { APP_GUARD } from '@nestjs/core';
-import { ParkingRolesGuard } from './@common/guards/parking-roles.guard';
 
 @Module({
   imports: [
@@ -27,11 +25,6 @@ import { ParkingRolesGuard } from './@common/guards/parking-roles.guard';
     ParkingLogsModule,
   ],
   controllers: [],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: ParkingRolesGuard,
-    },
-  ],
+  providers: [],
 })
 export class AppModule {}

@@ -18,8 +18,8 @@ import { AuthGuard } from 'src/@common/guards/auth.guard';
 import { ParkingRoles } from 'src/@common/decorators/tecopay-roles.decorator';
 import { ParkingRole } from 'src/@common/enums/roles.enum';
 
-@Controller('role')
-@ApiTags('Role')
+@Controller('roles')
+@ApiTags('Roles')
 @UseGuards(AuthGuard)
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}

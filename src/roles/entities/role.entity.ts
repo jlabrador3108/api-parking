@@ -1,7 +1,6 @@
-import { envs } from 'src/@config/envs';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ database: envs.postgres_db })
+@Entity()
 export class Role {
   @PrimaryGeneratedColumn()
   id: number;

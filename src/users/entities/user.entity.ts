@@ -1,4 +1,3 @@
-import { envs } from 'src/@config/envs';
 import { Reservation } from '../../reservations/entities/reservation.entity';
 import { Role } from '../../roles/entities/role.entity';
 import {
@@ -10,7 +9,7 @@ import {
   JoinTable,
 } from 'typeorm';
 
-@Entity({ database: envs.postgres_db })
+@Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

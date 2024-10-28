@@ -22,7 +22,7 @@ export class ParkingRolesGuard implements CanActivate {
       [context.getHandler(), context.getClass()],
     );
 
-    if (requiredRoles.length === 0) {
+    if (!requiredRoles || requiredRoles.length === 0) {
       return true;
     }
 

@@ -82,25 +82,27 @@ export class UsersService {
         }
       }
 
-      const roles = await this.rolesRepository.find({
-        where: { id: In(roleIds) },
-      });
-
-      if (roles.length !== roleIds.length) {
-        return ResponseMessage({
-          statusCode: HttpStatus.NOT_FOUND,
-          message: 'Some of the submitted roles are not found.',
-        });
-      }
-
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { roles: _, ...props } = updateUserDto;
 
       const user = await this.usersRepository.merge(existingUser, props);
 
-      user.roles = roles;
+      if (roleIds && roleIds.length > 0) {
+        const roles = await this.rolesRepository.find({
+          where: { id: In(roleIds) },
+        });
 
-      this.usersRepository.save(user);
+        if (roles.length !== roleIds.length) {
+          return ResponseMessage({
+            statusCode: HttpStatus.NOT_FOUND,
+            message: 'Some of the submitted roles are not found.',
+          });
+        }
+
+        user.roles = roles;
+      }
+
+      await this.usersRepository.save(user);
 
       return ResponseMessage({
         statusCode: HttpStatus.CREATED,

@@ -26,8 +26,11 @@ export class ReservationsController {
   constructor(private readonly reservationsService: ReservationsService) {}
 
   @Post()
-  async create(@Body() createReservationDto: CreateReservationDto) {
-    const userId = 67;
+  async create(
+    @Body() createReservationDto: CreateReservationDto,
+    @Req() request: Request,
+  ) {
+    const userId = request['user'].id;
     const response = await this.reservationsService.create(
       userId,
       createReservationDto,

@@ -4,7 +4,7 @@ npm run typeorm:migration:run -- -d src/database/config/data-source.ts
 
 typeorm cache:clear
 
-npm run
+npm run seed
 
 # mongo
 
@@ -14,15 +14,15 @@ npm run typeorm:migration:run -- -d src/database/config/data-source-mongo.ts
 
 const users = [
 {
-email: 'cliente@parking.com', //idRole 3
+email: 'cliente@parking.com',
 password: '1234',
 },
 {
-email: 'empleado@parking.com', //idRole 2
+email: 'empleado@parking.com', 
 password: '1234',
 },
 {
-email: 'admin@parking.com', //idRole
+email: 'admin@parking.com',
 password: '1234',
 },
 ];
