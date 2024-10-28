@@ -31,7 +31,7 @@
    ```
 3. **.env.example**
 
-- Puede usar el archivo .env.example para crear .
+- Puede usar el archivo .env.example para crear el .env
 
 4. **Generar las migraciones**
 
