@@ -1,6 +1,5 @@
 # Api parking
 
-
 ## Descripción
 
 - API RESTful utilizando Nestjs para la gestión de un parking.
@@ -57,11 +56,17 @@
    yarn start:dev
 
    ```
-8. **Test in Postman**
+8. **Test e2e**
+
+   ```bash
+   npm run test:e2e
+
+   ```
+9. **Test en Postman**
 
 - Puede importar en post el archivo `api-parking.postman_collection` localizado en la raíz del proyecto
 
-9. **Documentación**
+10. **Documentación**
 
 - en /api
 
@@ -82,6 +87,7 @@ email: 'admin@parking.com',
 password: '1234',
 },
 ];
+
 
 ### Casos de uso
 
