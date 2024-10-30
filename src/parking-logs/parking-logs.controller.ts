@@ -1,10 +1,4 @@
-import {
-  Controller,
-  Get,
-  HttpException,
-  HttpStatus,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, HttpException, UseGuards } from '@nestjs/common';
 import { ParkingLogsService } from './parking-logs.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/@common/guards/auth.guard';
@@ -21,21 +15,14 @@ export class ParkingLogsController {
   @ParkingRoles(ParkingRole.ADMIN)
   @ApiOperation({ summary: 'Get all parking logs' })
   async getAll() {
-    try {
-      const response = await this.parkingLogsService.findAllParkingLogs();
+    const response = await this.parkingLogsService.findAllParkingLogs();
 
-      if (response.statusCode >= 400) {
-        throw new HttpException(
-          response.message || 'An internal error has occurred.',
-          response.statusCode,
-        );
-      }
-      return response;
-    } catch (e) {
+    if (response.statusCode >= 400) {
       throw new HttpException(
-        e.message,
-        e.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        response.message || 'An internal error has occurred.',
+        response.statusCode,
       );
     }
+    return response;
   }
 }

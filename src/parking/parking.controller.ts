@@ -6,7 +6,6 @@ import {
   Param,
   Delete,
   HttpException,
-  HttpStatus,
   ParseIntPipe,
   Put,
   UseGuards,
@@ -29,65 +28,44 @@ export class ParkingController {
   @ParkingRoles(ParkingRole.ADMIN, ParkingRole.EMPLOYEE)
   @ApiOperation({ summary: 'New parking' })
   async create(@Body() createParkingDto: CreateParkingDto) {
-    try {
-      const response = await this.parkingService.create(createParkingDto);
-      if (response.statusCode >= 400) {
-        throw new HttpException(
-          response.message || 'An internal error has occurred.',
-          response.statusCode,
-        );
-      }
-      return response;
-    } catch (e) {
+    const response = await this.parkingService.create(createParkingDto);
+    if (response.statusCode >= 400) {
       throw new HttpException(
-        e.message,
-        e.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        response.message || 'An internal error has occurred.',
+        response.statusCode,
       );
     }
+    return response;
   }
 
   @Get()
   @ParkingRoles(ParkingRole.ADMIN, ParkingRole.EMPLOYEE)
   @ApiOperation({ summary: 'Get all parking' })
   async getAll() {
-    try {
-      const response = await this.parkingService.findAllParking();
+    const response = await this.parkingService.findAllParking();
 
-      if (response.statusCode >= 400) {
-        throw new HttpException(
-          response.message || 'An internal error has occurred.',
-          response.statusCode,
-        );
-      }
-      return response;
-    } catch (e) {
+    if (response.statusCode >= 400) {
       throw new HttpException(
-        e.message,
-        e.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        response.message || 'An internal error has occurred.',
+        response.statusCode,
       );
     }
+    return response;
   }
 
   @Get(':id')
   @ParkingRoles(ParkingRole.ADMIN, ParkingRole.EMPLOYEE)
   @ApiOperation({ summary: 'Get parking by id' })
   async getParkingById(@Param('id', ParseIntPipe) id: number) {
-    try {
-      const response = await this.parkingService.findById(id);
+    const response = await this.parkingService.findById(id);
 
-      if (response.statusCode >= 400) {
-        throw new HttpException(
-          response.message || 'An internal error has occurred.',
-          response.statusCode,
-        );
-      }
-      return response;
-    } catch (e) {
+    if (response.statusCode >= 400) {
       throw new HttpException(
-        e.message,
-        e.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        response.message || 'An internal error has occurred.',
+        response.statusCode,
       );
     }
+    return response;
   }
 
   @Put(':id')
@@ -97,41 +75,27 @@ export class ParkingController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateParkingDto: UpdateParkingDto,
   ) {
-    try {
-      const response = await this.parkingService.update(id, updateParkingDto);
-      if (response.statusCode >= 400) {
-        throw new HttpException(
-          response.message || 'An internal error has occurred.',
-          response.statusCode,
-        );
-      }
-      return response;
-    } catch (e) {
+    const response = await this.parkingService.update(id, updateParkingDto);
+    if (response.statusCode >= 400) {
       throw new HttpException(
-        e.message,
-        e.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        response.message || 'An internal error has occurred.',
+        response.statusCode,
       );
     }
+    return response;
   }
 
   @Delete(':id')
   @ParkingRoles(ParkingRole.ADMIN, ParkingRole.EMPLOYEE)
   @ApiOperation({ summary: 'Delete parking' })
   async remove(@Param('id', ParseIntPipe) id: number) {
-    try {
-      const response = await this.parkingService.remove(id);
-      if (response.statusCode >= 400) {
-        throw new HttpException(
-          response.message || 'An internal error has occurred.',
-          response.statusCode,
-        );
-      }
-      return response;
-    } catch (e) {
+    const response = await this.parkingService.remove(id);
+    if (response.statusCode >= 400) {
       throw new HttpException(
-        e.message,
-        e.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        response.message || 'An internal error has occurred.',
+        response.statusCode,
       );
     }
+    return response;
   }
 }

@@ -3,7 +3,6 @@ import {
   Post,
   Body,
   HttpException,
-  HttpStatus,
   Put,
   Param,
   ParseIntPipe,
@@ -28,21 +27,14 @@ export class UsersController {
   @Post()
   @ApiOperation({ summary: 'New user' })
   async createUser(@Body() createUserDto: CreateUserDto) {
-    try {
-      const response = await this.usersService.create(createUserDto);
-      if (response.statusCode >= 400) {
-        throw new HttpException(
-          response.message || 'An internal error has occurred.',
-          response.statusCode,
-        );
-      }
-      return response;
-    } catch (e) {
+    const response = await this.usersService.create(createUserDto);
+    if (response.statusCode >= 400) {
       throw new HttpException(
-        e.message,
-        e.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        response.message || 'An internal error has occurred.',
+        response.statusCode,
       );
     }
+    return response;
   }
 
   @Post('admin')
@@ -50,21 +42,14 @@ export class UsersController {
   @ParkingRoles(ParkingRole.ADMIN)
   @ApiOperation({ summary: 'New user by admin' })
   async createUserByAdmin(@Body() createUserDto: CreateUserByAdminDto) {
-    try {
-      const response = await this.usersService.createByAdmin(createUserDto);
-      if (response.statusCode >= 400) {
-        throw new HttpException(
-          response.message || 'An internal error has occurred.',
-          response.statusCode,
-        );
-      }
-      return response;
-    } catch (e) {
+    const response = await this.usersService.createByAdmin(createUserDto);
+    if (response.statusCode >= 400) {
       throw new HttpException(
-        e.message,
-        e.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        response.message || 'An internal error has occurred.',
+        response.statusCode,
       );
     }
+    return response;
   }
 
   @Get()
@@ -72,22 +57,15 @@ export class UsersController {
   @ParkingRoles(ParkingRole.ADMIN)
   @ApiOperation({ summary: 'Get all users' })
   async getAllUsers() {
-    try {
-      const response = await this.usersService.findAllUsers();
+    const response = await this.usersService.findAllUsers();
 
-      if (response.statusCode >= 400) {
-        throw new HttpException(
-          response.message || 'An internal error has occurred.',
-          response.statusCode,
-        );
-      }
-      return response;
-    } catch (e) {
+    if (response.statusCode >= 400) {
       throw new HttpException(
-        e.message,
-        e.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        response.message || 'An internal error has occurred.',
+        response.statusCode,
       );
     }
+    return response;
   }
 
   @Get(':id')
@@ -95,22 +73,15 @@ export class UsersController {
   @ParkingRoles(ParkingRole.ADMIN)
   @ApiOperation({ summary: 'Get user by id' })
   async getUserById(@Param('id', ParseIntPipe) id: number) {
-    try {
-      const response = await this.usersService.findById(id);
+    const response = await this.usersService.findById(id);
 
-      if (response.statusCode >= 400) {
-        throw new HttpException(
-          response.message || 'An internal error has occurred.',
-          response.statusCode,
-        );
-      }
-      return response;
-    } catch (e) {
+    if (response.statusCode >= 400) {
       throw new HttpException(
-        e.message,
-        e.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        response.message || 'An internal error has occurred.',
+        response.statusCode,
       );
     }
+    return response;
   }
 
   @Put(':id')
@@ -121,24 +92,14 @@ export class UsersController {
     @Param('id', ParseIntPipe) userId: number,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    try {
-      const response = await this.usersService.updateUser(
-        userId,
-        updateUserDto,
-      );
-      if (response.statusCode >= 400) {
-        throw new HttpException(
-          response.message || 'An internal error has occurred.',
-          response.statusCode,
-        );
-      }
-      return response;
-    } catch (e) {
+    const response = await this.usersService.updateUser(userId, updateUserDto);
+    if (response.statusCode >= 400) {
       throw new HttpException(
-        e.message,
-        e.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        response.message || 'An internal error has occurred.',
+        response.statusCode,
       );
     }
+    return response;
   }
 
   @Put(':id/roles')
@@ -149,23 +110,16 @@ export class UsersController {
     @Param('id', ParseIntPipe) userId: number,
     @Body() updateRolesDto: UpdateRolesDto,
   ) {
-    try {
-      const response = await this.usersService.updateUserRoles(
-        userId,
-        updateRolesDto.roles,
-      );
-      if (response.statusCode >= 400) {
-        throw new HttpException(
-          response.message || 'An internal error has occurred.',
-          response.statusCode,
-        );
-      }
-      return response;
-    } catch (e) {
+    const response = await this.usersService.updateUserRoles(
+      userId,
+      updateRolesDto.roles,
+    );
+    if (response.statusCode >= 400) {
       throw new HttpException(
-        e.message,
-        e.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        response.message || 'An internal error has occurred.',
+        response.statusCode,
       );
     }
+    return response;
   }
 }
