@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ParkingRole } from '../enums/roles.enum';
-import { PARKING_ROLES_KEY } from '../decorators/tecopay-roles.decorator';
+import { PARKING_ROLES_KEY } from '../decorators/parking-roles.decorator';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()

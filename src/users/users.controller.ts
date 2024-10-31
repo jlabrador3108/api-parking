@@ -16,11 +16,13 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateRolesDto } from './dto/update-roles.dto';
 import { CreateUserByAdminDto } from './dto/create-user-by-admin.dto';
 import { AuthGuard } from 'src/@common/guards/auth.guard';
-import { ParkingRoles } from 'src/@common/decorators/tecopay-roles.decorator';
+import { ParkingRoles } from 'src/@common/decorators/parking-roles.decorator';
 import { ParkingRole } from 'src/@common/enums/roles.enum';
+import { ParkingRolesGuard } from 'src/@common/guards/parking-roles.guard';
 
 @Controller('users')
 @ApiTags('Users')
+@UseGuards(ParkingRolesGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

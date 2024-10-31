@@ -7,6 +7,7 @@ import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { envs } from 'src/@config/envs';
 import { ReservationsModule } from 'src/reservations/reservations.module';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
   controllers: [ParkingController],
@@ -18,6 +19,7 @@ import { ReservationsModule } from 'src/reservations/reservations.module';
     }),
     TypeOrmModule.forFeature([Parking]),
     ReservationsModule,
+    UsersModule,
   ],
 })
 export class ParkingModule {}

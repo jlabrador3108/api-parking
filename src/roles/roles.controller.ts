@@ -14,12 +14,14 @@ import { RolesService } from './roles.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { AuthGuard } from 'src/@common/guards/auth.guard';
-import { ParkingRoles } from 'src/@common/decorators/tecopay-roles.decorator';
+import { ParkingRoles } from 'src/@common/decorators/parking-roles.decorator';
 import { ParkingRole } from 'src/@common/enums/roles.enum';
+import { ParkingRolesGuard } from 'src/@common/guards/parking-roles.guard';
 
 @Controller('roles')
 @ApiTags('Roles')
 @UseGuards(AuthGuard)
+@UseGuards(ParkingRolesGuard)
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 

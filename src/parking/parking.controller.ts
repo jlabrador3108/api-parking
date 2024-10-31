@@ -16,11 +16,13 @@ import { UpdateParkingDto } from './dto/update-parking.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/@common/guards/auth.guard';
 import { ParkingRole } from 'src/@common/enums/roles.enum';
-import { ParkingRoles } from 'src/@common/decorators/tecopay-roles.decorator';
+import { ParkingRoles } from 'src/@common/decorators/parking-roles.decorator';
+import { ParkingRolesGuard } from 'src/@common/guards/parking-roles.guard';
 
 @Controller('parking')
 @ApiTags('Parking')
 @UseGuards(AuthGuard)
+@UseGuards(ParkingRolesGuard)
 export class ParkingController {
   constructor(private readonly parkingService: ParkingService) {}
 
